@@ -1,0 +1,27 @@
+[OSINT = Open Source INTelligence]
+rencon-ng = hosts 정보 파악(IP주소, 도메인, 직원정보 파악가능(contacts))
+
+shodan = 인터넷에 연결된 서버의 정보들을 파악할 수 있음
+
+[구글검색엔진을 통한 해킹]
+검색어 site:class101.net (원하는 사이트에서만 결과값이 나옴)
+검색어 filetype:파일형식 (원하는 파일형식만 찾음)
+cache:사이트주소 (삭제된 페이지를 찾을 수 있음)
+inurl:class101 (class101 URL이 들어간 페이지들이 나옴)
+
+[pingsweep : 네트워크가 살아있는가?]
+ping = 컴퓨터의 정상여부를 확인하는 신호
+
+nmap =네트워크 스캐닝 툴 (-sn : 핑스윕 옵션)
+namp -n -vv -sn 192.168.0.103-255 -oG- | grep -i 'up'
+
+[portscan : 열려있는 포트번호 알아내기]
+nmap -sn 192.168.0.103-255 -open (open 돼 있는거만 찾기)
+nmap -O -sV -sS 192.168.0.104
+SYN Scan / Half SYN Scan(RST로 연결을 끊음 - SYN/ACK를 받으면 이미 연결 되어있는것을 알기때문에)
+
+[Wen Directory Scan] = 있을법한=사람들이 만들법한 디렉토리를 때려 넣는 것
+무작위대입공격
+사전대입공격
+
+dirbuster - 사전대입공격 툴
