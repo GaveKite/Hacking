@@ -1,0 +1,15 @@
+searchspliot : 제공하는 서비스에 있는 취약점을 찾아냄.
+
+SQL Injection
+Shell = 명령어를 입력할 수 있는 곳
+Web Shell : 웹 상에서 명령어를 입력할 수 있는 곳
+
+서버는 실행파일 요청이 오면 그 실행파일을 실행하고 결과값을 사용자에게 보여줌.
+즉, 악성스크립트를 삽입시키면 사용자가 이를 실행요청 하는 순간 해커가 PC를 장악할 수 있음.
+
+nc -nvlp 7777 : 7777번 포트를 열겠음
+
+File Inclusion : 웹페이지 제작시 고정동작하는 부분 / But 악용이 쉬움
+== File inclusion 주소창에 include 부분에 적는 경로를 원하는 곳으로 바꾸어 정보 탈취 가능 = LFI(Local File Inclusion)
+
+RFI(Remote File Inclusion) : 원격 파일 인클루드 (원격지 셸을 획득하여 정보 탈취 및 악성코드 실행 가능)
